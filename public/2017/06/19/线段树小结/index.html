@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/rss.xml" title="Fish's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="前言：实验室要开展每周的算法讲堂活动，大概是每周一个集训队员来给大家将一个知识点，于是我去讲线段树来开头了，但是自己好弱啊，自从寒假集训后就一直没敲过线段树代码了，于是这几天一直在照着金巨巨的博客刷线段树的题（也是抄的金巨巨的模板…）。 这里总结一些做到的题，一些线段树的基本思路，也当做理一下总结的思路。 用到的一些宏定义：123#define lson root&amp;lt;&amp;lt;1#define">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线段树小结">
+<meta property="og:url" content="https://li-fish.github.io/2017/06/19/线段树小结/index.html">
+<meta property="og:site_name" content="Fish&#39;s Blog">
+<meta property="og:description" content="前言：实验室要开展每周的算法讲堂活动，大概是每周一个集训队员来给大家将一个知识点，于是我去讲线段树来开头了，但是自己好弱啊，自从寒假集训后就一直没敲过线段树代码了，于是这几天一直在照着金巨巨的博客刷线段树的题（也是抄的金巨巨的模板…）。 这里总结一些做到的题，一些线段树的基本思路，也当做理一下总结的思路。 用到的一些宏定义：123#define lson root&amp;lt;&amp;lt;1#define">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-23T02:00:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="线段树小结">
+<meta name="twitter:description" content="前言：实验室要开展每周的算法讲堂活动，大概是每周一个集训队员来给大家将一个知识点，于是我去讲线段树来开头了，但是自己好弱啊，自从寒假集训后就一直没敲过线段树代码了，于是这几天一直在照着金巨巨的博客刷线段树的题（也是抄的金巨巨的模板…）。 这里总结一些做到的题，一些线段树的基本思路，也当做理一下总结的思路。 用到的一些宏定义：123#define lson root&amp;lt;&amp;lt;1#define">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://li-fish.github.io/2017/06/19/线段树小结/"/>
+
+
+
+
+
+  <title>线段树小结 | Fish's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Fish's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://li-fish.github.io/2017/06/19/线段树小结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fish">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fish's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">线段树小结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-19T12:46:32+08:00">
+                2017-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ACM/" itemprop="url" rel="index">
+                    <span itemprop="name">ACM</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ACM/知识小结/" itemprop="url" rel="index">
+                    <span itemprop="name">知识小结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/19/线段树小结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/06/19/线段树小结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h1><p>实验室要开展每周的算法讲堂活动，大概是每周一个集训队员来给大家将一个知识点，于是我去讲线段树来开头了，但是自己好弱啊，自从寒假集训后就一直没敲过线段树代码了，于是这几天一直在照着金巨巨的博客刷线段树的题（也是抄的金巨巨的模板…）。</p>
+<p>这里总结一些做到的题，一些线段树的基本思路，也当做理一下总结的思路。</p>
+<p>用到的一些宏定义：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> lson root&lt;&lt;1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> rson root&lt;&lt;1|1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MID int m = (l + r) / 2</span></div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="线段树的基本概念："><a href="#线段树的基本概念：" class="headerlink" title="线段树的基本概念："></a>线段树的基本概念：</h1><p>如果把线段树当做一个数据结构的话，那么可以这样解释线段树：</p>
+<p>首先线段树是一颗二叉树，特殊的是线段树的每个节点，用来维护一段区间的信息，通常的写法都是这样，假设父节点维护的区间是$[a, b]$，那么他的左右儿子维护的区间分别是$[a, (a+b)/2], [(a+b)/2+1, b]$。</p>
+<p>一个节点维护的信息通常有，区间和，区间连续子串和，区间最大值，区间最小值等。</p>
+<h2 id="建树过程："><a href="#建树过程：" class="headerlink" title="建树过程："></a>建树过程：</h2><p>构造一颗线段树的过程，可以参考分治算法的步骤：</p>
+<ol>
+<li>假设要计算区间$[a, b]$中需要维护的信息，我们将这个问题分解成计算$[a, (a+b)/2], [(a+b)/2+1, b]$中需要维护的信息两个子问题，这样子问题与原问题的形式一样，只是规模更小.</li>
+<li>对于第一步分解出的每个子问题，继续使用第一步进行分解得到规模更小的子问题，直到问题的规模足够小，可以直接求解。通常来讲是区间长度为$1$的时候，这样容易计算出需要维护的信息，比如区间和、区间极值等可以以$O(1)$的时间直接计算出。</li>
+<li>最后一步是将上面分解出的子问题的解，合并成原问题的解，通常这一步也是最难的一步。</li>
+</ol>
+<p>下面是建树的代码，完美的符合了上述过程。<br>这里需要注意的一点是，对于每个节点，要么他是一个叶子节点，要么他是一个同时具有左右儿子的节点。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">build</span> <span class="params">(<span class="keyword">int</span> root ,<span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (l == r) &#123;</div><div class="line">        tree[root].maintain(data[l], l);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    MID;</div><div class="line">    build(lson, l, m);</div><div class="line">    build(rson, m+<span class="number">1</span>, r);</div><div class="line">    tree[root] = tree[lson] + tree[rson];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通过上述分治的步骤，我们也可以另一种方式理解线段树：<br>我们要解决一个大问题，然后我们用分治的方法是解决这个问题，不过这里我们要把每一步解决的子问题的解都记录下来。这样所有子问题的解，和原问题的解就构成了一颗线段树。</p>
+<h2 id="更新："><a href="#更新：" class="headerlink" title="更新："></a>更新：</h2><p>线段树的更新过程，也是递归来实现的。这里以单点更新来举例，因为线段树是储存着许多子问题的解的，所以对一个点进行更新，可能会对多个子问题有影响，这里我们也用分治算法去更新。</p>
+<p>假设要对$[1,n]$的区间下标为$p$的点进行更新。那么对于$[1,n]$区间可以先对他的两个儿子节点$[1,(1+n)/2], [(1+n)/2+1, r]$进行更新，$[1,n]$区间可由更新后的两个儿子节点组合而成。对他的两个儿子节点也进行如下操作，直到一个节点可以直接计算出更新后的变化。</p>
+<p>下面是更新的代码，符合上述过程，不过这里加入了一个剪枝，如果需要更新的点不在当前节点维护的区间，那么这次更新对当前节点一点没有影响，不需要继续向下更新。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">updata</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> pos, <span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (pos &lt; l || r &lt; pos)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span> (l == r) &#123;</div><div class="line">        tree[root].maintain(v, pos);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    MID;</div><div class="line">    updata(lson, l, m, pos, v);</div><div class="line">    updata(rson, m+<span class="number">1</span>, r, pos, v);</div><div class="line">    tree[root] = tree[lson] + tree[rson];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="查询："><a href="#查询：" class="headerlink" title="查询："></a>查询：</h2><p>查询过程其实就是用已经解决的子问题的解去构造新问题的解的过程。</p>
+<p>比如之前说过，对于一个维护$[1,n]$区间的线段树，它里面就存着着分治解决$[1,n]$这个问题的所有子问题的解。那么对于每次查询区间$[l,r],1\leq l \leq r \leq n$，都是一个规模小于$[1,n]$的问题。那么对于这个问题的解，可以用解决$[1,n]$问题的子问题的解构造出来。</p>
+<p>以下是查询过程中的代码，就是遍历原问题的所有子问题的解，去构造新问题的解，这里加入了剪枝，如果一个区间和需要查询的区间没有交集，那么就可以剪枝。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function">Info <span class="title">query</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> ql, <span class="keyword">int</span> qr)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (qr &lt; l || r &lt; ql)</div><div class="line">        <span class="keyword">return</span> Info();</div><div class="line">    <span class="keyword">if</span> (ql &lt;= l &amp;&amp; r &lt;= qr) &#123;</div><div class="line">        <span class="keyword">return</span> tree[root];</div><div class="line">    &#125;</div><div class="line">    MID;</div><div class="line">    <span class="keyword">return</span> query(lson, l, m, ql, qr) + query(rson, m+<span class="number">1</span>, r, ql, qr);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="合并："><a href="#合并：" class="headerlink" title="合并："></a>合并：</h1><p>所谓合并就是合并两个节点为一个节点，也就是合并子问题，构造原问题解的过程。</p>
+<p>比如我分别知道$[a, b]$和$[b+1, c]$区间的最大值为$x_1, x_2$，那么区间$[a, b]$的最大值，那么就是$max(x_1, x_2)$。这样就用这两段区间的解构造出了另一个区间的解。</p>
+<p>这里重载了加号，用起来比较方便。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Info <span class="keyword">operator</span> + (<span class="keyword">const</span> Info &amp; a, <span class="keyword">const</span> Info &amp; b) &#123;</div><div class="line">    Info rst;</div><div class="line">    rst.value = max(a.value, b.value);</div><div class="line">    <span class="keyword">return</span> rst;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当然这只是一个简单的例子，在许多线段树中合并起来非常麻烦，比如求一段区间内的最大的连续子串和。</p>
+<p>对于区间$[1, n]$，那么最长连续子串和一定来自于以下的三种：</p>
+<ul>
+<li>区间$[1,(n+1)/2]$的最长连续子串和；</li>
+<li>区间$[(n+1)/2+1, n]$的最长连续子串和；</li>
+<li>区间$[1,(n+1)/2]$的从右端开始的最长连续子串和加上区间$[(n+1)/2+1,n]$从左端开始的最长连续子串和。</li>
+</ul>
+<p>对于每段区间需要维护三个信息，从左端开始的最长连续子串和，从右端开始的最长连续子串和，最长连续子串和。分别记为<code>lmax,rmax,value</code>。</p>
+<p>那么合并两个区间的代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Info <span class="keyword">operator</span> + (<span class="keyword">const</span> Info &amp; a, <span class="keyword">const</span> Info &amp; b) &#123;</div><div class="line">    Info rst;</div><div class="line">    rst.lmax = max(a.lmax, a.sum + b.lmax);</div><div class="line">    rst.rmax = max(b.rmax, a.rmax + b.sum);</div><div class="line">    rst.sum = a.sum + b.sum;</div><div class="line">    rst.value = max(max(a.value, b.value), a.rmax + b.lmax);</div><div class="line">    <span class="keyword">return</span> rst;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里为了方便操作，记录了区间的和。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/14/匹配、覆盖、独立集、二分图与网络流/" rel="next" title="匹配、覆盖、独立集、二分图与网络流">
+                <i class="fa fa-chevron-left"></i> 匹配、覆盖、独立集、二分图与网络流
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/21/HDU1394-Minimum-Inversion-Number（线段树）/" rel="prev" title="HDU1394 - Minimum Inversion Number（线段树）">
+                HDU1394 - Minimum Inversion Number（线段树） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.gif"
+                alt="Fish" />
+            
+              <p class="site-author-name" itemprop="name">Fish</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/rss.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/li-fish" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/Li_Fish/activities" target="_blank" title="知乎">
+                    
+                      <i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:li_fish@126.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.csdn.net/a1s4z5" title="QAQ" target="_blank">QAQ</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://iceblues.github.io/" title="iceblues" target="_blank">iceblues</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.csdn.net/sdut16szq" title="szq" target="_blank">szq</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.csdn.net/yyxiangyu" title="zxy" target="_blank">zxy</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线段树的基本概念："><span class="nav-number">2.</span> <span class="nav-text">线段树的基本概念：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#建树过程："><span class="nav-number">2.1.</span> <span class="nav-text">建树过程：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新："><span class="nav-number">2.2.</span> <span class="nav-text">更新：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询："><span class="nav-number">2.3.</span> <span class="nav-text">查询：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#合并："><span class="nav-number">3.</span> <span class="nav-text">合并：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fish</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://FishLi.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://li-fish.github.io/2017/06/19/线段树小结/';
+          this.page.identifier = '2017/06/19/线段树小结/';
+          this.page.title = '线段树小结';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://FishLi.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

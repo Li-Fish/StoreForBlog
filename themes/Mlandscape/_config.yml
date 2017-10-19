@@ -1,0 +1,35 @@
+# Header
+menu:
+  - {name: Home, path: /, class: icon-home, layout: 1}
+  - {name: Archives, path: /archives, class: icon-archive, layout: 2}
+
+# Content
+excerpt_link: Read More
+fancybox: true
+
+# Sidebar
+sidebar: right
+widgets:
+	- category
+	- recent_posts
+
+# Miscellaneous
+google_analytics:
+favicon: /f.ico
+twitter:
+google_plus: 
+fb_admins:
+fb_app_id:
+
+# Google sitemap
+google_siteVerification:
+  id: 
+
+# Toc
+toc:
+  article: true   ## show contents in article.
+  aside: false     ## show contents in aside.
+
+## social
+
+

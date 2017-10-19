@@ -1,0 +1,151 @@
+.archives-wrap
+  margin: block-margin 0
+
+.archives
+  clearfix()
+
+.archive-year-wrap
+  margin-bottom: 1em
+
+.archive-year
+  @extend $block-caption
+
+.archives
+  column-gap: 10px
+  @media mq-tablet
+    column-count: 2
+  @media mq-normal
+    column-count: 3
+
+.archive-article
+  avoid-column-break()
+
+.archive-article-inner
+  @extend $block
+  padding: 10px
+  margin-bottom: 15px
+  background-color: color-theme
+
+.archive-article-title
+  text-decoration: none
+  font-weight: bold
+  color: color-font
+  transition: color 0.2s
+  line-height: line-height
+  &:hover
+    color: color-link
+
+.archive-article-footer
+  margin-top: 1em
+
+.archive-article-date
+  color: color-grey
+  text-decoration: none
+  font-size: 0.85em
+  line-height: 1em
+  margin-bottom: 0.5em
+  display: block
+
+#page-nav
+  clearfix()
+  @extend $block
+  margin: block-margin auto
+  background: color-theme
+  text-align: center
+  color: color-grey
+  overflow: hidden
+  a, span
+    padding: 10px 20px
+  a
+    color: color-grey
+    text-decoration: none
+    &:hover
+      background: color-blue
+      color: #fff
+  .prev
+    float: left
+  .next
+    float: right
+  .page-number
+    display: inline-block
+    @media mq-mobile
+      display: none
+  .current
+    color: color-default
+    font-weight: bold
+  .space
+    color: color-border
+
+.archive
+  ul
+    list-style none
+    margin-left 20px
+    margin-top -26px
+    border-left 4px solid #CACACA
+    @media mq-mobile, mq-tablet
+      margin-left 6px
+    li
+      padding-left: 14px
+      overflow hidden
+      text-overflow ellipsis
+      &:before
+        content ""
+        border-color transparent #CACACA
+        border-style solid
+        border-width 0.35em 0 0.35em 0.45em
+        display block
+        height 0
+        width 0
+        left -1em
+        top 1em
+        position relative
+      time
+        margin-right 8px
+        color: color-default
+        font-size 20px
+      a
+        text-decoration none
+        color color-link
+        font-size 20px
+        white-space nowrap
+        overflow hidden
+        text-overflow ellipsis
+        @media mq-tablet, mq-mobile
+          display block
+          width 100%
+          text-overflow ellipsis
+  .archive-item
+    margin-bottom 20px
+    padding-bottom 10px
+    border-bottom 1px dashed #ddd
+  .archive-year
+    font-size 30px
+    margin-bottom 30px
+  .archive-article-title
+    width 100%
+  .archive-tag
+    text-decoration: none
+    font-size: 0.85em
+    line-height: 0.8em
+    float right
+    text-overflow ellipsis
+    @media mq-tablet, mq-mobile
+      width 100%
+      .article-tag-list-item
+        width 100%
+      .article-tag-list
+        width 100%
+    ul, li
+      margin 0px 3px
+      @media mq-tablet
+        display block
+      @media mq-normal
+        display block
+    a
+      text-decoration none
+      color color-grey
+      white-space nowrap
+      @media mq-tablet, mq-mobile
+        display block
+        width 100%
+        text-overflow ellipsis

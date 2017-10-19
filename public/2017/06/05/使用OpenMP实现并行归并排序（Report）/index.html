@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/rss.xml" title="Fish's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="归并排序算法：归并排序算法是一种经典的分治算法。 分治分治算法分为由三部分组成：分解：将原问题分解为一系列子问题；解决：递归的解决各个子问题。若子问题足够小，那么直接求解。合并：将子问题的结果合并成原问题。 归并排序步骤归并排序完全依照了上述模式，直观的操作如下：分解：将n个元素分成各含n/2个元素的子序列；解决：用合并排序法对两个子序列递归地排序；合并：合并两个已经排序的子序列，已得到排序结果。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用OpenMP实现并行归并排序（Report）">
+<meta property="og:url" content="https://li-fish.github.io/2017/06/05/使用OpenMP实现并行归并排序（Report）/index.html">
+<meta property="og:site_name" content="Fish&#39;s Blog">
+<meta property="og:description" content="归并排序算法：归并排序算法是一种经典的分治算法。 分治分治算法分为由三部分组成：分解：将原问题分解为一系列子问题；解决：递归的解决各个子问题。若子问题足够小，那么直接求解。合并：将子问题的结果合并成原问题。 归并排序步骤归并排序完全依照了上述模式，直观的操作如下：分解：将n个元素分成各含n/2个元素的子序列；解决：用合并排序法对两个子序列递归地排序；合并：合并两个已经排序的子序列，已得到排序结果。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20170605171543250?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQUNNX0Zpc2g=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170605210453384?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQUNNX0Zpc2g=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170605210516264?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQUNNX0Zpc2g=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-07-23T02:21:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用OpenMP实现并行归并排序（Report）">
+<meta name="twitter:description" content="归并排序算法：归并排序算法是一种经典的分治算法。 分治分治算法分为由三部分组成：分解：将原问题分解为一系列子问题；解决：递归的解决各个子问题。若子问题足够小，那么直接求解。合并：将子问题的结果合并成原问题。 归并排序步骤归并排序完全依照了上述模式，直观的操作如下：分解：将n个元素分成各含n/2个元素的子序列；解决：用合并排序法对两个子序列递归地排序；合并：合并两个已经排序的子序列，已得到排序结果。">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170605171543250?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQUNNX0Zpc2g=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://li-fish.github.io/2017/06/05/使用OpenMP实现并行归并排序（Report）/"/>
+
+
+
+
+
+  <title>使用OpenMP实现并行归并排序（Report） | Fish's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Fish's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://li-fish.github.io/2017/06/05/使用OpenMP实现并行归并排序（Report）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fish">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fish's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用OpenMP实现并行归并排序（Report）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-05T16:41:18+08:00">
+                2017-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS课程/" itemprop="url" rel="index">
+                    <span itemprop="name">CS课程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/05/使用OpenMP实现并行归并排序（Report）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/06/05/使用OpenMP实现并行归并排序（Report）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="归并排序算法："><a href="#归并排序算法：" class="headerlink" title="归并排序算法："></a>归并排序算法：</h1><p>归并排序算法是一种经典的分治算法。</p>
+<h2 id="分治"><a href="#分治" class="headerlink" title="分治"></a>分治</h2><p>分治算法分为由三部分组成：<br>分解：将原问题分解为一系列子问题；<br>解决：递归的解决各个子问题。若子问题足够小，那么直接求解。<br>合并：将子问题的结果合并成原问题。</p>
+<h2 id="归并排序步骤"><a href="#归并排序步骤" class="headerlink" title="归并排序步骤"></a>归并排序步骤</h2><p>归并排序完全依照了上述模式，直观的操作如下：<br>分解：将n个元素分成各含n/2个元素的子序列；<br>解决：用合并排序法对两个子序列递归地排序；<br>合并：合并两个已经排序的子序列，已得到排序结果。<br>这里递归的边界是序列长度为1时，显然是有序的。</p>
+<h2 id="合并过程"><a href="#合并过程" class="headerlink" title="合并过程"></a>合并过程</h2><p>这里最关键的步骤，是合并步骤里如何合并两个有序的序列，并保证合并后的序列依然有序。</p>
+<p>假设有序的序列为递增的，A、B为需要合并的序列，C为合并后的结果序列，p、q分别为A和B的下标，top为C的下标。定义如果一个下标大于序列的长度后，表示的值为无穷大。</p>
+<p>初始状态：p、q、top均为0.</p>
+<p>操作：选择A[p]和B[q]中的小的元素，加入到C[top]中，然后让较小的元素所在的序列的下标加一，top加一。当A[p]和B[q]均为无穷大时，结束操作。</p>
+<p>由于每次操作均是比较A[p]和B[q]，然后取较小者加入C中，显然时间复杂度是O(n)的。</p>
+<h2 id="归并排序时间复杂度分析："><a href="#归并排序时间复杂度分析：" class="headerlink" title="归并排序时间复杂度分析："></a>归并排序时间复杂度分析：</h2><p>假设归并排序一个长度为n的序列需要的时间为T(n)。<br>首先归并排序分如下三个步骤：<br>分解：这一步是把序列分为两个子序列，只需要常量时间，O(1)；<br>解决：递归的解决规模为n/2的两个子问题，时间为2*T(n/2)；<br>合并：上面已经证明，只需时间O(n)。</p>
+<p>那么接下来可以UI递归的表示出所需的时间T(n):<br>当n = 1是，T(n) = O(1)；<br>否则：T(n) = 2*T(n/2) + O(n)。</p>
+<p>可以证明出上述的T(n)其实就是O(n*log(n))。</p>
+<p>T(n) = 2<em>T(n/2) + O(n)<br>        = 2</em>(2<em>T(n/4) + O(n/2) + O(n)<br>        = 4</em>T(n/4) + 2<em>O(n/2) + O(n)<br>        = 4</em>T(n/4) + 2<em>O(n)<br>        = 8</em>T(n/8) + 8<em>O(n/8) + 2</em>O(n)<br>        = 8<em>T(n/8) + 3</em>O(n)<br>        = x<em>T(1) + y</em>O(n)</p>
+<p>显然y即为n除多少次才为1，y = log2(n)，x等于2^y，那么T(n) = O(n*log(n))。</p>
+<h2 id="一个容易理解的代码："><a href="#一个容易理解的代码：" class="headerlink" title="一个容易理解的代码："></a>一个容易理解的代码：</h2><p>Python is very beautiful！<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span><span class="params">(array)</span>:</span></div><div class="line">    <span class="keyword">if</span> len(array) &gt; <span class="number">1</span>:</div><div class="line">        mid = len(array) / <span class="number">2</span></div><div class="line">        left = merge_sort(array[:mid])</div><div class="line">        right = merge_sort(array[mid:])</div><div class="line">        <span class="keyword">return</span> merge(left, right)</div><div class="line">    <span class="keyword">return</span> array</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge</span><span class="params">(left, right)</span>:</span></div><div class="line">    rst = []</div><div class="line">    <span class="keyword">while</span> len(left) &gt; <span class="number">0</span> <span class="keyword">or</span> len(right) &gt; <span class="number">0</span>:</div><div class="line">        <span class="keyword">if</span> len(right) == <span class="number">0</span> <span class="keyword">or</span> len(left) != <span class="number">0</span> <span class="keyword">and</span> left[<span class="number">0</span>] &lt; right[<span class="number">0</span>]:</div><div class="line">            rst.append(left.pop(<span class="number">0</span>))</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            rst.append(right.pop(<span class="number">0</span>))</div><div class="line">    <span class="keyword">return</span> rst</div></pre></td></tr></table></figure></p>
+<h1 id="串行过程："><a href="#串行过程：" class="headerlink" title="串行过程："></a>串行过程：</h1><h2 id="串行排序代码："><a href="#串行排序代码：" class="headerlink" title="串行排序代码："></a>串行排序代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_sort</span><span class="params">(<span class="keyword">int</span> *A, <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> *T)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (y - x &gt; <span class="number">1</span>) &#123;</div><div class="line">        <span class="keyword">int</span> m = x + (y-x)/<span class="number">2</span>;</div><div class="line">        <span class="keyword">int</span> p = x, q = m, i = x;</div><div class="line">        merge_sort(A, x, m, T);</div><div class="line">        merge_sort(A, m, y, T);</div><div class="line">        </div><div class="line">        <span class="keyword">while</span> (p &lt; m || q &lt; y) &#123;</div><div class="line">            <span class="keyword">if</span> (q &gt;= y || (p &lt; m &amp;&amp; A[p] &lt;= A[q])) &#123;</div><div class="line">                T[i++] = A[p++];</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                T[i++] = A[q++];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (i = x; i &lt; y; i++) &#123;</div><div class="line">            A[i] = T[i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="串行求和代码："><a href="#串行求和代码：" class="headerlink" title="串行求和代码："></a>串行求和代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_sum</span><span class="params">(<span class="keyword">int</span>* data, <span class="keyword">int</span> N)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>, i;</div><div class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; N; i++) &#123;</div><div class="line">        sum += data[i];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> sum;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="运行时间："><a href="#运行时间：" class="headerlink" title="运行时间："></a>运行时间：</h2><table>
+<thead>
+<tr>
+<th>num_elements</th>
+<th>sort time</th>
+<th>sum time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>0.000012</td>
+<td>0.000001</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>0.000166</td>
+<td>0.000005</td>
+</tr>
+<tr>
+<td>10000</td>
+<td>0.002162</td>
+<td>0.000045</td>
+</tr>
+<tr>
+<td>100000</td>
+<td>0.022915</td>
+<td>0.000384</td>
+</tr>
+<tr>
+<td>1000000</td>
+<td>0.216075</td>
+<td>0.003397</td>
+</tr>
+<tr>
+<td>10000000</td>
+<td>2.404543</td>
+<td>0.034109</td>
+</tr>
+<tr>
+<td>100000000</td>
+<td>27.204318</td>
+<td>0.340051</td>
+</tr>
+</tbody>
+</table>
+<p>ignore the input time.</p>
+<h1 id="并行过程："><a href="#并行过程：" class="headerlink" title="并行过程："></a>并行过程：</h1><h2 id="归并排序算法的并行化："><a href="#归并排序算法的并行化：" class="headerlink" title="归并排序算法的并行化："></a>归并排序算法的并行化：</h2><p>首先，归并排序的步骤分为已下三步：</p>
+<p>分解：将n个元素分成各含n/2个元素的子序列；<br>解决：用合并排序法对两个子序列递归地排序；<br>合并：合并两个已经排序的子序列，已得到排序结果。</p>
+<p>然后发现，按照这个思路很难并行化，因为许多过程有依赖的，比如当[1, 1], [2, 2] 区间没有合并之前，那么[1, 2], [3, 4]区间是不能进行合并的。</p>
+<p>但是我们可以把归并的步骤反过来。原来归并是要不断的分解一个序列，直到分解成长度为1的区间，最后依次合并。我们现在假设有N个区间，要分别合并，最后合并成一个区间。那么我现在的操作是没有前后依赖的，对于任意两个区间，只需要合并就好，不用考虑其他的线程。</p>
+<p>这样排序的过程就类似一颗线段树（严格的来讲并不是），自底向上的不断合并。</p>
+<p><img src="http://img.blog.csdn.net/20170605171543250?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQUNNX0Zpc2g=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="排序代码："><a href="#排序代码：" class="headerlink" title="排序代码："></a>排序代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//合并两个区间</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> l1, <span class="keyword">int</span> r1, <span class="keyword">int</span> r2, <span class="keyword">int</span>* data, <span class="keyword">int</span>* temp)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> top = l1, p = l1, q = r1;</div><div class="line">    <span class="keyword">while</span> (p &lt; r1 || q &lt; r2) &#123;</div><div class="line">        <span class="keyword">if</span> (q &gt;= r2 || (p &lt; r1 &amp;&amp; data[p] &lt;= data[q])) &#123;</div><div class="line">            temp[top++] = data[p++];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            temp[top++] = data[q++];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (top = l1; top &lt; r2; top++) &#123;</div><div class="line">        data[top] = temp[top];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_sort</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span>* data, <span class="keyword">int</span> N)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> i, j, t, *temp;</div><div class="line">    temp = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(N * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</div><div class="line">    <span class="comment">//这里做了一些优化，预处理合并了单个的区间，略微提高的速度</span></div><div class="line">	<span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for private(i, t) shared(N, data)</span></div><div class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; N/<span class="number">2</span>; i++)</div><div class="line">        <span class="keyword">if</span> (data[i*<span class="number">2</span>] &gt; data[i*<span class="number">2</span>+<span class="number">1</span>]) &#123;</div><div class="line">            t = data[i*<span class="number">2</span>];</div><div class="line">            data[i*<span class="number">2</span>] = data[i*<span class="number">2</span>+<span class="number">1</span>];</div><div class="line">            data[i*<span class="number">2</span>+<span class="number">1</span>] = t;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">	<span class="comment">//i代表每次归并的区间长度，j代表需要归并的两个区间中最小的下标</span></div><div class="line">    <span class="keyword">for</span> (i = <span class="number">2</span>; i &lt; r; i *= <span class="number">2</span>) &#123;</div><div class="line">		<span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for private(j) shared(r, i)</span></div><div class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; r-i; j += i*<span class="number">2</span>) &#123;</div><div class="line">            merge(j, j+i, (j+i*<span class="number">2</span> &lt; r ? j+i*<span class="number">2</span> : r), data, temp);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="求和代码："><a href="#求和代码：" class="headerlink" title="求和代码："></a>求和代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_sum</span><span class="params">(<span class="keyword">int</span>* data, <span class="keyword">int</span> N)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>, i;</div><div class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for private(i) reduct(+:sum)</span></div><div class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; N; i++) &#123;</div><div class="line">        sum += data[i];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> sum;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="运行时间：-1"><a href="#运行时间：-1" class="headerlink" title="运行时间："></a>运行时间：</h2><table>
+<thead>
+<tr>
+<th>num_elements</th>
+<th>sort time</th>
+<th>sum time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>0.000164</td>
+<td>0.000009</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>0.000209</td>
+<td>0.000009</td>
+</tr>
+<tr>
+<td>10000</td>
+<td>0.002318</td>
+<td>0.000052</td>
+</tr>
+<tr>
+<td>100000</td>
+<td>0.010589</td>
+<td>0.000166</td>
+</tr>
+<tr>
+<td>1000000</td>
+<td>0.110090</td>
+<td>0.001279</td>
+</tr>
+<tr>
+<td>10000000</td>
+<td>1.093572</td>
+<td>0.013541</td>
+</tr>
+<tr>
+<td>100000000</td>
+<td>11.872408</td>
+<td>0.127646</td>
+</tr>
+</tbody>
+</table>
+<p>ignore the input time.</p>
+<h1 id="运行时间分析："><a href="#运行时间分析：" class="headerlink" title="运行时间分析："></a>运行时间分析：</h1><h2 id="排序时间对比："><a href="#排序时间对比：" class="headerlink" title="排序时间对比："></a>排序时间对比：</h2><p><img src="http://img.blog.csdn.net/20170605210453384?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQUNNX0Zpc2g=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="求和时间对比："><a href="#求和时间对比：" class="headerlink" title="求和时间对比："></a>求和时间对比：</h2><p><img src="http://img.blog.csdn.net/20170605210516264?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQUNNX0Zpc2g=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="结论："><a href="#结论：" class="headerlink" title="结论："></a>结论：</h2><p>增加线程数在是可以加快程序的运行速度的，但是随着线程的增加，加速的效果逐渐变得不明显，双线程与单线程的差异较大，整体上多线程的用时为单线程的一半。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/31/HDU3085-Nightmare-Ⅱ（双向BFS）/" rel="next" title="HDU3085 - Nightmare Ⅱ（双向BFS）">
+                <i class="fa fa-chevron-left"></i> HDU3085 - Nightmare Ⅱ（双向BFS）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/11/UVA12511-Virus（DP-最长公共上升子序列）/" rel="prev" title="UVA12511 - Virus（DP+最长公共上升子序列）">
+                UVA12511 - Virus（DP+最长公共上升子序列） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.gif"
+                alt="Fish" />
+            
+              <p class="site-author-name" itemprop="name">Fish</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/rss.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/li-fish" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/Li_Fish/activities" target="_blank" title="知乎">
+                    
+                      <i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:li_fish@126.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.csdn.net/a1s4z5" title="QAQ" target="_blank">QAQ</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://iceblues.github.io/" title="iceblues" target="_blank">iceblues</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.csdn.net/sdut16szq" title="szq" target="_blank">szq</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.csdn.net/yyxiangyu" title="zxy" target="_blank">zxy</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#归并排序算法："><span class="nav-number">1.</span> <span class="nav-text">归并排序算法：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分治"><span class="nav-number">1.1.</span> <span class="nav-text">分治</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序步骤"><span class="nav-number">1.2.</span> <span class="nav-text">归并排序步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并过程"><span class="nav-number">1.3.</span> <span class="nav-text">合并过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序时间复杂度分析："><span class="nav-number">1.4.</span> <span class="nav-text">归并排序时间复杂度分析：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个容易理解的代码："><span class="nav-number">1.5.</span> <span class="nav-text">一个容易理解的代码：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#串行过程："><span class="nav-number">2.</span> <span class="nav-text">串行过程：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#串行排序代码："><span class="nav-number">2.1.</span> <span class="nav-text">串行排序代码：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#串行求和代码："><span class="nav-number">2.2.</span> <span class="nav-text">串行求和代码：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时间："><span class="nav-number">2.3.</span> <span class="nav-text">运行时间：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#并行过程："><span class="nav-number">3.</span> <span class="nav-text">并行过程：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序算法的并行化："><span class="nav-number">3.1.</span> <span class="nav-text">归并排序算法的并行化：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排序代码："><span class="nav-number">3.2.</span> <span class="nav-text">排序代码：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#求和代码："><span class="nav-number">3.3.</span> <span class="nav-text">求和代码：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时间：-1"><span class="nav-number">3.4.</span> <span class="nav-text">运行时间：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行时间分析："><span class="nav-number">4.</span> <span class="nav-text">运行时间分析：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#排序时间对比："><span class="nav-number">4.1.</span> <span class="nav-text">排序时间对比：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#求和时间对比："><span class="nav-number">4.2.</span> <span class="nav-text">求和时间对比：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论："><span class="nav-number">4.3.</span> <span class="nav-text">结论：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fish</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://FishLi.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://li-fish.github.io/2017/06/05/使用OpenMP实现并行归并排序（Report）/';
+          this.page.identifier = '2017/06/05/使用OpenMP实现并行归并排序（Report）/';
+          this.page.title = '使用OpenMP实现并行归并排序（Report）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://FishLi.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
