@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="Fish&#39;s Blog">
 <meta property="og:description" content="简介2-SAT （2-satisfiability）是描述一个这样的问题，有 n 个 bool 变量 $x_i$，并且有 m 个需要满足的条件，比如： “$x_1$为真或$x_2$为假”，“ $x_1$ 为真或$x_2$为真”之类的条件，这里”或“是指两个条件中至少有一个为真。SAT的问题是确定这 n 个变量的值，使得满足所有的条件。 解法以下主要参考Sengxian’s Blog和刘汝佳的白书。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-18T02:53:37.108Z">
+<meta property="og:updated_time" content="2017-10-18T02:57:20.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2-SAT问题（模板）">
 <meta name="twitter:description" content="简介2-SAT （2-satisfiability）是描述一个这样的问题，有 n 个 bool 变量 $x_i$，并且有 m 个需要满足的条件，比如： “$x_1$为真或$x_2$为假”，“ $x_1$ 为真或$x_2$为真”之类的条件，这里”或“是指两个条件中至少有一个为真。SAT的问题是确定这 n 个变量的值，使得满足所有的条件。 解法以下主要参考Sengxian’s Blog和刘汝佳的白书。">
@@ -378,7 +378,8 @@
 <p>这样根据上面建完图后，接下来逐一考虑没有标记的变量，设为 $x_i$。我们先假定它为假，然后标记节点 $2i$，并且沿着有向边标记所有能标记的节点。如果标记过程中发现某个变量所对应的两个节点都被标记了，则 “ $x_i$ 为假” 这个假定不成立，需要改成 “ $x_i$ 为真”，然后退回到标记 “ $x_i$ 为假” 之前的状态，重新操作。注意，如果当前考虑的变量不管是真是假都会引起矛盾，可以证明整个 2-SAT 问题无解（即使调整以前赋值的其他变量都没用），所以这个算法是没有回溯过程的，这样最差的复杂度是 $O(N \cdot M)$。</p>
 <p>其实对于 2-SAT 问题还 $O(M)$ 的算法，不过对于 2-SAT 问题一般是考的建图方式，不卡时间，这里给出几个链接：</p>
 <ul>
-<li>​</li>
+<li><a href="http://blog.csdn.net/hqd_acm/article/details/5881655" target="_blank" rel="external">http://blog.csdn.net/hqd_acm/article/details/5881655</a></li>
+<li><a href="http://www.cppblog.com/MatoNo1/archive/2015/12/29/150766.html" target="_blank" rel="external">http://www.cppblog.com/MatoNo1/archive/2015/12/29/150766.html</a></li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TwoSat</span> &#123;</span></div><div class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> MAX_NODE = <span class="number">1000</span>;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; G[MAX_NODE];</div><div class="line">    <span class="keyword">int</span> n, stk[MAX_NODE], sz;</div><div class="line">    <span class="keyword">bool</span> mark[MAX_NODE];</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> _n)</span> </span>&#123;</div><div class="line">        n = _n;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n * <span class="number">2</span>; ++i) G[i].clear();</div><div class="line">        <span class="built_in">memset</span>(mark, <span class="number">0</span>, <span class="keyword">sizeof</span>(mark));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addClause</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> xVal, <span class="keyword">int</span> y, <span class="keyword">int</span> yVal)</span> </span>&#123;</div><div class="line">        x = x * <span class="number">2</span> + xVal, y = y * <span class="number">2</span> + yVal;</div><div class="line">        G[x ^ <span class="number">1</span>].push_back(y);</div><div class="line">        G[y ^ <span class="number">1</span>].push_back(x);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mark[x ^ <span class="number">1</span>]) <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        <span class="keyword">if</span> (mark[x]) <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        stk[sz++] = x;</div><div class="line">        mark[x] = <span class="literal">true</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)G[x].size(); ++i)</div><div class="line">            <span class="keyword">if</span> (!dfs(G[x][i])) <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n * <span class="number">2</span>; i += <span class="number">2</span>)</div><div class="line">            <span class="keyword">if</span> (!mark[i] &amp;&amp; !mark[i ^ <span class="number">1</span>]) &#123;</div><div class="line">                sz = <span class="number">0</span>;</div><div class="line">                <span class="keyword">if</span> (!dfs(i)) &#123;</div><div class="line">                    <span class="keyword">while</span> (sz &gt; <span class="number">0</span>) mark[stk[--sz]] = <span class="literal">false</span>;</div><div class="line">                    <span class="keyword">if</span> (!dfs(i ^ <span class="number">1</span>)) <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><p>上面描述的条件都只是 “或”，即是两个之中有一个成立，这里可以通过多个“或”条件的组合产生其他的逻辑条件。</p>
@@ -446,6 +447,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/24/CCPC2017哈理工比赛总结/" rel="prev" title="CCPC2017哈理工比赛总结">
+                CCPC2017哈理工比赛总结 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -536,7 +541,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-count">110</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -547,7 +552,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
