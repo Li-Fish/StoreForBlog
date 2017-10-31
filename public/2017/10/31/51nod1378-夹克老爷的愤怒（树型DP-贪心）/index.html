@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="题目链接：http://acm.hdu.edu.cn/showproblem.php?pid=6156  题目大意：设函数 f(n, k) 的取值为，若 n 在 k 进制下为回文数字，那么函数值为 k 否则 为 1 。 给出 a ，b ，L， R。 求 $\sum_{i=a}^b$ $ \sum_{j = L}^R$ $f(i, j)$ 。  解题过程：CCPC 网络赛的题，算是一个裸的板子题了，">
+<meta name="description" content="题目链接：http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1378 题目大意：给出一张 N 个节点树形图，从中选若干个节点，使得途中任一节点距离最近的选中节点的距离不超过 K。 $1\le N\le 1e5, 0 \le K \le N$ 题目分析：树型DP，贪心的放，刚开始对于一颗子树，如果深度等于 K 那么肯定选中这颗">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HDU6156 - Palindrome Function（数位DP）">
-<meta property="og:url" content="https://li-fish.github.io/2017/08/25/HDU6156-Palindrome-Function（数位DP）/index.html">
+<meta property="og:title" content="51nod1378 - 夹克老爷的愤怒（树型DP+贪心）">
+<meta property="og:url" content="https://li-fish.github.io/2017/10/31/51nod1378-夹克老爷的愤怒（树型DP-贪心）/index.html">
 <meta property="og:site_name" content="Fish&#39;s Blog">
-<meta property="og:description" content="题目链接：http://acm.hdu.edu.cn/showproblem.php?pid=6156  题目大意：设函数 f(n, k) 的取值为，若 n 在 k 进制下为回文数字，那么函数值为 k 否则 为 1 。 给出 a ，b ，L， R。 求 $\sum_{i=a}^b$ $ \sum_{j = L}^R$ $f(i, j)$ 。  解题过程：CCPC 网络赛的题，算是一个裸的板子题了，">
+<meta property="og:description" content="题目链接：http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1378 题目大意：给出一张 N 个节点树形图，从中选若干个节点，使得途中任一节点距离最近的选中节点的距离不超过 K。 $1\le N\le 1e5, 0 \le K \le N$ 题目分析：树型DP，贪心的放，刚开始对于一颗子树，如果深度等于 K 那么肯定选中这颗">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-25T02:53:01.000Z">
+<meta property="og:updated_time" content="2017-10-31T13:19:43.689Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HDU6156 - Palindrome Function（数位DP）">
-<meta name="twitter:description" content="题目链接：http://acm.hdu.edu.cn/showproblem.php?pid=6156  题目大意：设函数 f(n, k) 的取值为，若 n 在 k 进制下为回文数字，那么函数值为 k 否则 为 1 。 给出 a ，b ，L， R。 求 $\sum_{i=a}^b$ $ \sum_{j = L}^R$ $f(i, j)$ 。  解题过程：CCPC 网络赛的题，算是一个裸的板子题了，">
+<meta name="twitter:title" content="51nod1378 - 夹克老爷的愤怒（树型DP+贪心）">
+<meta name="twitter:description" content="题目链接：http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1378 题目大意：给出一张 N 个节点树形图，从中选若干个节点，使得途中任一节点距离最近的选中节点的距离不超过 K。 $1\le N\le 1e5, 0 \le K \le N$ 题目分析：树型DP，贪心的放，刚开始对于一颗子树，如果深度等于 K 那么肯定选中这颗">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://li-fish.github.io/2017/08/25/HDU6156-Palindrome-Function（数位DP）/"/>
+  <link rel="canonical" href="https://li-fish.github.io/2017/10/31/51nod1378-夹克老爷的愤怒（树型DP-贪心）/"/>
 
 
 
 
 
-  <title>HDU6156 - Palindrome Function（数位DP） | Fish's Blog</title>
+  <title>51nod1378 - 夹克老爷的愤怒（树型DP+贪心） | Fish's Blog</title>
   
 
 
@@ -244,7 +244,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://li-fish.github.io/2017/08/25/HDU6156-Palindrome-Function（数位DP）/">
+    <link itemprop="mainEntityOfPage" href="https://li-fish.github.io/2017/10/31/51nod1378-夹克老爷的愤怒（树型DP-贪心）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Fish">
@@ -261,7 +261,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HDU6156 - Palindrome Function（数位DP）</h1>
+          <h1 class="post-title" itemprop="name headline">51nod1378 - 夹克老爷的愤怒（树型DP+贪心）</h1>
         
 
         <div class="post-meta">
@@ -273,8 +273,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-25T10:37:05+08:00">
-                2017-08-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-31T20:51:52+08:00">
+                2017-10-31
               </time>
             
 
@@ -314,17 +314,6 @@
 
                 
                 
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ACM/DP/数位DP/" itemprop="url" rel="index">
-                    <span itemprop="name">数位DP</span>
-                  </a>
-                </span>
-
-                
-                
               
             </span>
           
@@ -336,9 +325,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/08/25/HDU6156-Palindrome-Function（数位DP）/#comments" itemprop="discussionUrl">
+                <a href="/2017/10/31/51nod1378-夹克老爷的愤怒（树型DP-贪心）/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/08/25/HDU6156-Palindrome-Function（数位DP）/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/10/31/51nod1378-夹克老爷的愤怒（树型DP-贪心）/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -371,19 +360,19 @@
       
 
       
-        <h1 id="题目链接："><a href="#题目链接：" class="headerlink" title="题目链接："></a>题目链接：</h1><p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=6156" target="_blank" rel="external">http://acm.hdu.edu.cn/showproblem.php?pid=6156</a></p>
-<hr>
-<h1 id="题目大意："><a href="#题目大意：" class="headerlink" title="题目大意："></a>题目大意：</h1><p>设函数 f(n, k) 的取值为，若 n 在 k 进制下为回文数字，那么函数值为 k 否则 为 1 。</p>
-<p>给出 a ，b ，L， R。</p>
-<p>求 $\sum_{i=a}^b$ $ \sum_{j = L}^R$ $f(i, j)$ 。</p>
-<hr>
-<h1 id="解题过程："><a href="#解题过程：" class="headerlink" title="解题过程："></a>解题过程：</h1><p>CCPC 网络赛的题，算是一个裸的板子题了，数位 DP 之前也算是做过，不过没做过这种类型的数位 DP ，然后弃疗了。过了好久把数位 DP 的专题刷掉之后才来补的。</p>
-<hr>
-<h1 id="题目分析："><a href="#题目分析：" class="headerlink" title="题目分析："></a>题目分析：</h1><p>定义状态<code>dp[start][pos][flag][k]</code></p>
-<p>表示在 k 进制下以 start 位置开始的回文串，在 pos 位置下，回文串个数，flag 表示当前串是否为回文串。</p>
-<p>对于前导零是忽略掉的，选取前导零就视为将 start 位置减一。对于回文串，前一半随意枚举就可以，后一半要进行判断。即对 <code>(start+1)/2 &gt; pos</code>的情况进行判断，这时候要用一个数组记录之前枚举的数字。</p>
-<hr>
-<h1 id="AC代码："><a href="#AC代码：" class="headerlink" title="AC代码："></a>AC代码：</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX = <span class="number">50</span>;</div><div class="line"></div><div class="line">LL dp[MAX][MAX][<span class="number">2</span>][MAX];</div><div class="line"><span class="keyword">int</span> num[MAX], tmp[MAX], k;</div><div class="line"></div><div class="line"><span class="function">LL <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> cur, <span class="keyword">int</span> start, <span class="keyword">bool</span> flag, <span class="keyword">bool</span> bound)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (cur &lt; <span class="number">0</span>) <span class="keyword">return</span> flag;</div><div class="line">    <span class="keyword">if</span> (!bound &amp;&amp; dp[cur][start][flag][k] != <span class="number">-1</span>) <span class="keyword">return</span> dp[cur][start][flag][k];</div><div class="line">    <span class="keyword">int</span> last = bound ? num[cur] : k - <span class="number">1</span>;</div><div class="line">    LL ans = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= last; i++) &#123;</div><div class="line">        <span class="comment">//判断是否为前导零</span></div><div class="line">        <span class="keyword">bool</span> st = (cur == start &amp;&amp; i == <span class="number">0</span>);</div><div class="line">        <span class="keyword">bool</span> new_flag = flag;</div><div class="line">        <span class="keyword">if</span> (flag) &#123;</div><div class="line">            <span class="comment">//如果当前是回文串的后半段的话，就判断下当前是否构成回文串</span></div><div class="line">            <span class="keyword">if</span> (!st &amp;&amp; cur &lt; (start + <span class="number">1</span>) / <span class="number">2</span>) new_flag = (tmp[start - cur] == i);</div><div class="line">        &#125;</div><div class="line">        tmp[cur] = i;</div><div class="line">        ans += dfs(cur - <span class="number">1</span>, st ? start - <span class="number">1</span> : start, new_flag, bound &amp;&amp; (i == last));</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (!bound) dp[cur][start][flag][k] = ans;</div><div class="line">    <span class="keyword">return</span> ans;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">LL <span class="title">solve</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> len = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span> (n) &#123;</div><div class="line">        num[len++] = n % k;</div><div class="line">        n /= k;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> dfs(len - <span class="number">1</span>, len - <span class="number">1</span>, <span class="literal">true</span>, <span class="literal">true</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> T;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;T);</div><div class="line">    <span class="built_in">memset</span>(dp, <span class="number">-1</span>, <span class="keyword">sizeof</span>(dp));</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> Case = <span class="number">1</span>; Case &lt;= T; Case++) &#123;</div><div class="line">        <span class="keyword">int</span> a, b, l, r;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d %d %d"</span>, &amp;a, &amp;b, &amp;l, &amp;r);</div><div class="line">        LL ans = <span class="number">0</span>;</div><div class="line">        <span class="comment">//枚举进制</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = l; i &lt;= r; i++) &#123;</div><div class="line">            k = i;</div><div class="line">            LL t = (solve(b) - solve(a - <span class="number">1</span>));</div><div class="line">            ans += (b - a + <span class="number">1</span>) + t * (k - <span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"Case #%d: %lld\n"</span>, Case, ans);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <h1 id="题目链接："><a href="#题目链接：" class="headerlink" title="题目链接："></a>题目链接：</h1><p><a href="http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1378" target="_blank" rel="external">http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1378</a></p>
+<h1 id="题目大意："><a href="#题目大意：" class="headerlink" title="题目大意："></a>题目大意：</h1><p>给出一张 N 个节点树形图，从中选若干个节点，使得途中任一节点距离最近的选中节点的距离不超过 K。</p>
+<p>$1\le N\le 1e5, 0 \le K \le N$</p>
+<h1 id="题目分析："><a href="#题目分析：" class="headerlink" title="题目分析："></a>题目分析：</h1><p>树型DP，贪心的放，刚开始对于一颗子树，如果深度等于 K 那么肯定选中这颗子树的根节点。这时候这个选中的节点不仅对子孙节点有贡献，还对祖先或兄弟节点有贡献，这时候我们用一个数组 DP[i] 记录某个点可以做出多少贡献，或一个点需要多少的贡献。</p>
+<p>比如选中了 u 节点，那么他具有 k 的贡献，他的父亲和孩子都有 k - 1的贡献。对于一个叶子节点视它为 0 点贡献，那么他的祖先就需要 -1 点贡献。</p>
+<p>对于每个节点需要维护的是一颗子树的信息，要满足以它为根的子树里面的所有节点的需求。</p>
+<p>通过以下方式进行转移：</p>
+<p><code>minn = min(dp[child]), maxn = max(dp[child]);</code></p>
+<p>如果当前节点为叶子节点，那么 <code>minn = maxn = 0</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">if minn &lt;= -k				#这时 u 的子树中已经有一个节点需求为 -k，如果不选中当前节点肯定无解</div><div class="line">    dp[u] = k, ans++		</div><div class="line">else if maxn + minn &gt; 0		#这时 u 的子树中有一个节点的贡献可以满足其他节点的需求</div><div class="line">    dp[u] = maxn - 1</div><div class="line">else 						#如果不满足这两种情况，那么贪心的想，需求向祖先节点需求</div><div class="line">	dp[u] = minn - 1</div></pre></td></tr></table></figure>
+<h1 id="AC代码："><a href="#AC代码：" class="headerlink" title="AC代码："></a>AC代码：</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX = <span class="number">100000</span> + <span class="number">100</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF = <span class="number">0x3f3f3f3f</span>;</div><div class="line"></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; edge[MAX];</div><div class="line"></div><div class="line"><span class="keyword">int</span> dp[MAX];</div><div class="line"></div><div class="line"><span class="keyword">int</span> ans = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> n, k;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> fa)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> minn = INF;</div><div class="line">    <span class="keyword">int</span> maxn = -INF;</div><div class="line">    <span class="keyword">bool</span> ok = <span class="literal">false</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> v : edge[u]) &#123;</div><div class="line">        <span class="keyword">if</span> (v == fa) <span class="keyword">continue</span>;</div><div class="line">        dfs(v, u);</div><div class="line">        ok = <span class="literal">true</span>;</div><div class="line">        minn = min(dp[v], minn);</div><div class="line">        maxn = max(dp[v], maxn);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!ok) maxn = minn = <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span> (minn &lt;= -k) dp[u] = k, ans++;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (maxn + minn &gt; <span class="number">0</span>) dp[u] = maxn - <span class="number">1</span>;</div><div class="line">    <span class="keyword">else</span> dp[u] = minn - <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;k);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</div><div class="line">        <span class="keyword">int</span> u, v;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;u, &amp;v);</div><div class="line">        edge[u].push_back(v);</div><div class="line">        edge[v].push_back(u);</div><div class="line">    &#125;</div><div class="line">    dfs(<span class="number">0</span>, <span class="number">-1</span>);</div><div class="line">    <span class="keyword">if</span> (dp[<span class="number">0</span>] &lt; <span class="number">0</span>) ans++;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, ans);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="解题过程："><a href="#解题过程：" class="headerlink" title="解题过程："></a>解题过程：</h1><p>在白书上看到了一个类似的题，然后扩展了一下，去群里问了下做法，感觉应该是很经典的题，然后人形题库 qls 就给出 51nod 上的原题，于是就补了一下。还是有一个坑点的，如果直接不考虑叶子节点的话，对于 k = 0 的情况需要特判。</p>
+
       
     </div>
     
@@ -407,8 +396,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/21/Gym-100917J-Judgement-背包DP-bitset/" rel="next" title="Gym 100917J Judgement(背包DP+bitset)">
-                <i class="fa fa-chevron-left"></i> Gym 100917J Judgement(背包DP+bitset)
+              <a href="/2017/10/27/HDU4819-Mosaic（二维线段树-单点更新区间查询-模板）/" rel="next" title="HDU4819 - Mosaic（二维线段树-单点更新区间查询 + 模板）">
+                <i class="fa fa-chevron-left"></i> HDU4819 - Mosaic（二维线段树-单点更新区间查询 + 模板）
               </a>
             
           </div>
@@ -416,10 +405,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/28/2017年暑假集训/" rel="prev" title="2017年暑假集训">
-                2017年暑假集训 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -611,7 +596,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目链接："><span class="nav-number">1.</span> <span class="nav-text">题目链接：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目大意："><span class="nav-number">2.</span> <span class="nav-text">题目大意：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解题过程："><span class="nav-number">3.</span> <span class="nav-text">解题过程：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目分析："><span class="nav-number">4.</span> <span class="nav-text">题目分析：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AC代码："><span class="nav-number">5.</span> <span class="nav-text">AC代码：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目链接："><span class="nav-number">1.</span> <span class="nav-text">题目链接：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目大意："><span class="nav-number">2.</span> <span class="nav-text">题目大意：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目分析："><span class="nav-number">3.</span> <span class="nav-text">题目分析：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AC代码："><span class="nav-number">4.</span> <span class="nav-text">AC代码：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解题过程："><span class="nav-number">5.</span> <span class="nav-text">解题过程：</span></a></li></ol></div>
             
 
           </div>
@@ -782,9 +767,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://li-fish.github.io/2017/08/25/HDU6156-Palindrome-Function（数位DP）/';
-          this.page.identifier = '2017/08/25/HDU6156-Palindrome-Function（数位DP）/';
-          this.page.title = 'HDU6156 - Palindrome Function（数位DP）';
+          this.page.url = 'https://li-fish.github.io/2017/10/31/51nod1378-夹克老爷的愤怒（树型DP-贪心）/';
+          this.page.identifier = '2017/10/31/51nod1378-夹克老爷的愤怒（树型DP-贪心）/';
+          this.page.title = '51nod1378 - 夹克老爷的愤怒（树型DP+贪心）';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://FishLi.disqus.com/embed.js';
