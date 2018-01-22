@@ -28,31 +28,25 @@ http://acm.hdu.edu.cn/showproblem.php?pid=4280
 #include <algorithm>
 #include <queue>
 using namespace std;
-
 const int INF = 0x3f3f3f3f;
 const int MAX = 100000+100;
-
 struct Info {
     int to, cap, nxt;
 } edge[MAX<<1];
-
-int head[MAX], tot;
+int head[MAX], tot, cur[MAX];
 int N, M, T;
 int level[MAX];
-
 //用前向星建边
 void add_edge(int u, int v, int w) {
     edge[tot].to = v;
     edge[tot].cap = w;
     edge[tot].nxt = head[u];
     head[u] = tot++;
-
     edge[tot].to = u;
     edge[tot].cap = w;
     edge[tot].nxt = head[v];
     head[v] = tot++;
 }
-
 //BFS构建层次图
 bool bfs(int s, int e) {
     memset(level, -1, sizeof(level));
@@ -71,12 +65,11 @@ bool bfs(int s, int e) {
     }
     return level[e] != -1;
 }
-
 int dfs(int u, int end, int f) {
     //如果为终点的话就返回流量
     if (u == end) return f;
     int flow = 0, d;
-    for (int i = head[u]; ~i; i = edge[i].nxt) {
+    for (int &i = cur[u]; ~i; i = edge[i].nxt) {
         int v = edge[i].to;
         //只由低层次的点向高层次的点增广
         if (edge[i].cap > 0 && level[u] < level[v] && (d = dfs(v, end, min(edge[i].cap, f)))) {
@@ -91,15 +84,14 @@ int dfs(int u, int end, int f) {
     if (flow == 0) level[u] = -1;
     return flow;
 }
-
 int max_flow(int s, int e) {
     int flow = 0;
     while (bfs(s, e)) {
+        memcpy(cur, head, sizeof(head));
         flow += dfs(s, e, INF);
     }
     return flow;
 }
-
 int main() {
     scanf("%d", &T);
     while (T--) {

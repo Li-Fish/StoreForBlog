@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="题目链接：http://codeforces.com/problemset/problem/727/E
+题目大意：给出一个长度为 $N \times k$  的字符串，可以将其看成一个环首尾相接。问这个字符串是否可以由下面给出的  g 个字符串组成，保证字符串不同并且长度均为 k，每个字符串只能用一">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Fish">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="CodeForce727E - Games on a CD（字符串双hash模板）"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="Fish&#39;s Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>CodeForce727E - Games on a CD（字符串双hash模板） - Fish&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">poi</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/test.png')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>CodeForce727E - Games on a CD（字符串双hash模板）</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2017-11-28
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+<a href="/categories/ACM/">ACM</a>/ <a href="/categories/ACM/字符串/">字符串</a>/ <a href="/categories/ACM/字符串/字符串Hash/">字符串Hash</a>
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="题目链接："><a href="#题目链接：" class="headerlink" title="题目链接："></a>题目链接：</h1><p><a href="http://codeforces.com/problemset/problem/727/E" target="_blank" rel="external">http://codeforces.com/problemset/problem/727/E</a></p>
+<h1 id="题目大意："><a href="#题目大意：" class="headerlink" title="题目大意："></a>题目大意：</h1><p>给出一个长度为 $N \times k$  的字符串，可以将其看成一个环首尾相接。问这个字符串是否可以由下面给出的  g 个字符串组成，保证字符串不同并且<strong>长度均为 k</strong>，每个字符串只能用一次。</p>
+<p>$1\le N, k \le 10^5$    $n \cdot k, g \cdot k \le 2 \times 10^6$</p>
+<h1 id="题目分析："><a href="#题目分析：" class="headerlink" title="题目分析："></a>题目分析：</h1><p>这题只要会字符串 Hash 就会做了，首先把原串复制一遍放到结尾。因为每个串的长度都为 k 所以从 0 到 k 枚举起点，然后不断的跳到后面 k 个位置，判断 g 个字符串是否匹配上这一段子串并且没有被使用，如果找到一组解就输出答案。</p>
+<p>复杂度$O(N\log n)$这里把 Hash 后的 pair 映射成整数，多了一个 log。</p>
+<h1 id="AC代码："><a href="#AC代码：" class="headerlink" title="AC代码："></a>AC代码：</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX = <span class="number">200000</span> + <span class="number">100</span>;</div><div class="line"></div><div class="line"><span class="comment">//--------------------双哈希---------------------------------------</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> MOD[] = &#123;<span class="number">1000000007</span>, <span class="number">1000000009</span>&#125;;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> P = <span class="number">10000017</span>;</div><div class="line"></div><div class="line"><span class="built_in">vector</span>&lt;ll&gt; hashValue[<span class="number">2</span>][MAX];</div><div class="line"><span class="built_in">string</span> str[MAX];</div><div class="line">ll powNum[<span class="number">2</span>][MAX];</div><div class="line"></div><div class="line"><span class="comment">//对一个字符串进行 hash 并保留前缀和</span></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">2</span>; k++) &#123;</div><div class="line">        hashValue[k][n].clear();</div><div class="line">        hashValue[k][n].push_back(<span class="number">0</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= str[n].size(); i++) &#123;</div><div class="line">            hashValue[k][n].push_back((hashValue[k][n][i - <span class="number">1</span>] * P + str[n][i - <span class="number">1</span>]) % MOD[k]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//获得某个字符串的任一子串的 hash 值</span></div><div class="line"><span class="keyword">inline</span> pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; getHash(<span class="keyword">int</span> n, <span class="keyword">int</span> l = <span class="number">0</span>, <span class="keyword">int</span> r = <span class="number">-1</span>) &#123;</div><div class="line">    <span class="keyword">if</span> (r == <span class="number">-1</span>) r = str[n].size() - <span class="number">1</span>;</div><div class="line">    l++, r++;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">2</span>; k++) &#123;</div><div class="line">        ans.push_back((<span class="keyword">int</span>) (((hashValue[k][n][r] - hashValue[k][n][l - <span class="number">1</span>] * powNum[k][r - l + <span class="number">1</span>]) % MOD[k] + MOD[k]) %</div><div class="line">                             MOD[k]));</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> make_pair(ans[<span class="number">0</span>], ans[<span class="number">1</span>]);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//初始化幂，计算过程中使用</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">init_pow</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">2</span>; k++) &#123;</div><div class="line">        powNum[k][<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; MAX; i++) &#123;</div><div class="line">            powNum[k][i] = powNum[k][i - <span class="number">1</span>] * P % MOD[k];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//将 hash 得到的 pair 映射成整数</span></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; store;</div><div class="line"><span class="built_in">map</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;, <span class="keyword">int</span>&gt; hashName;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">getID</span><span class="params">(pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; n, <span class="keyword">int</span> index = <span class="number">0</span>)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (hashName.count(n)) <span class="keyword">return</span> hashName[n];</div><div class="line">    store.push_back(index);</div><div class="line">    <span class="keyword">return</span> hashName[n] = store.size() - <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//--------------------双哈希------------------------------------------------</span></div><div class="line"></div><div class="line"><span class="keyword">bool</span> ok[MAX];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    init_pow();</div><div class="line"></div><div class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</div><div class="line"></div><div class="line">    <span class="keyword">int</span> n, k, g;</div><div class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; k;</div><div class="line">    <span class="built_in">cin</span> &gt;&gt; str[<span class="number">0</span>];</div><div class="line">    str[<span class="number">0</span>] = str[<span class="number">0</span>] + str[<span class="number">0</span>];</div><div class="line">    init(<span class="number">0</span>);</div><div class="line"></div><div class="line">    <span class="built_in">cin</span> &gt;&gt; g;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= g; i++) &#123;</div><div class="line">        <span class="built_in">cin</span> &gt;&gt; str[i];</div><div class="line">        init(i);</div><div class="line">        getID(getHash(i), i);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//枚举起点</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> st = <span class="number">0</span>; st &lt; k; st++) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</div><div class="line">        <span class="keyword">bool</span> flag = <span class="literal">true</span>;</div><div class="line">        <span class="comment">//计算从起点到终点中，是否可以有 g 个字符串组成</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = st; i &lt; st + str[<span class="number">0</span>].size() / <span class="number">2</span>; i += k) &#123;</div><div class="line">            pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; v = getHash(<span class="number">0</span>, i + <span class="number">1</span>, i + k);</div><div class="line">            <span class="keyword">if</span> (!hashName.count(v)) &#123;</div><div class="line">                flag = <span class="literal">false</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">int</span> idx = getID(v);</div><div class="line">            <span class="keyword">if</span> (ok[idx]) &#123;</div><div class="line">                flag = <span class="literal">false</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            ans.push_back(idx);</div><div class="line">            ok[idx] = <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (flag) &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"YES\n"</span>);</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ans.size(); i++) &#123;</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"%d "</span>, store[ans[i]]);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ans.size(); i++) &#123;</div><div class="line">            ok[ans[i]] = <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"NO\n"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="解题过程："><a href="#解题过程：" class="headerlink" title="解题过程："></a>解题过程：</h1><p>Hash 过程的代码完全参照<a href="https://www.bilibili.com/video/av7230433/?from=search&amp;seid=6735421237600758359" target="_blank" rel="external">卿学姐的视频</a>写的，非常感谢！</p>
+<p><a href="http://pan.baidu.com/s/1c27PEF2" target="_blank" rel="external">PPT链接</a></p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/klugjo/hexo-theme-clean-blog" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2018 Fish<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+<script type="text/javascript">
+	var mid = document.querySelector('article>.container')
+	if (mid != null) mid.style.width = "100%"
+</script>
+
+				
+<!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": { 
+        preferredFont: "TeX", 
+        availableFonts: ["STIX","TeX"], 
+        linebreaks: { automatic:true }, 
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) 
+    },
+    tex2jax: { 
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ], 
+        processEscapes: true, 
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {  
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+        Macros: { href: "{}" } 
+    },
+    messageStyle: "none"
+    }); 
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+</body>
+
+</html>

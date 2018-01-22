@@ -73,7 +73,7 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 plugins: hexo-generate-feed
-theme: next
+theme: clean-blog
 
 #RSS 插件配置
 feed:
